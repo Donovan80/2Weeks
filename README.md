@@ -63,7 +63,7 @@ Deploying.
 5a. Check container
     sudo docker run -t -i 2weeks:latest /bin/bash
 
-
+.
 Setup of Webservice
 Use Docker offical Nginx Docker Image
 1.  docker run --name mynginx1 -P -d nginx
