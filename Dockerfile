@@ -9,45 +9,34 @@ FROM ubuntu:wily
 #RUN echo "deb http://apt.dockerproject.org/repo/dists/ubuntu-wily/main" > /etc/apt/sources.list
 
 # File Author / Maintainer
-MAINTAINER Robert Donovan <admin@mixfin.com>
+MAINTAINER Robert Donovan <robert.b.donovan@gmail.com>
 
 # Update the sources list and Install basic applications
-RUN apt-get update
+run perl -p -i.orig -e 's/archive.ubuntu.com/mirrors.aliyun.com\/ubuntu/' /etc/apt/sources.list
 RUN apt-get install -y build-essential git
-
 RUN apt-get install -y python python-dev python-setuptools
 RUN apt-get install -y nginx supervisor
 RUN easy_install pip
 
-
-##RUN apt-get install -y -o Dpkg::Options::="--force-confold" tar curl nano wget dialog nginx supervisor net-tools libxml2-dev libxslt1-dev
-
-# Install Python and Basic Python Tools
-RUN apt-get install -y -f python python-dev python-distribute python-pip python2.7-dev
-RUN apt-get install -y -f libmysqlclient-dev
-
-#Install webserver and Web server gateway
+# Install uwsgi now because it takes a little while
 RUN pip install uwsgi
 
-# install nginx
-#run apt-get install -y python-software-properties
+# Install nginx
 RUN apt-get install -y software-properties-common python-software-properties
 RUN add-apt-repository ppa:nginx/stable
-#RUN apt-get install mysql-client
+RUN apt-get install mysql-client
 
+#Install App code
+add . /home/docker/code/
 
-# Set up DevUser
-RUN useradd dlkrbd -u 1000 -s /bin/bash --no-create-home
-RUN gpasswd -a dlkrbd sudo
+#Config files
+RUN echo "deamon off;" >> /etc/nginx/nginx.conf
+RUN rm /etc/nginx/sites-enabled/default
+RUN ln -s /home/docker/code/nginx-app.conf /etc/nginx/site-enabled/
+RUN ln -s /home/docker/code/supervisor-app.conf /etc/supervisor/conf.d/
 
 # Copy the application folder inside the container
 RUN git clone https://github.com/mixfinancial/2Weeks.git
-
-# Setup all the config files
-run echo "daemon off;" >> /etc/nginx/nginx.conf
-run rm /etc/nginx/sites-enabled/default
-run ln -s /2Weeks/nginx-app.conf /etc/nginx/sites-enabled/
-run ln -s /2Weeks/supervisor-app.conf /etc/supervisor/conf.d/
 
 # Get pip to download and install requirements:
 RUN pip install -r /2Weeks/requirements.txt
@@ -55,16 +44,9 @@ RUN pip install -r /2Weeks/requirements.txt
 #Run the setup script from Dave
 #RUN chmod +x /2Weeks/scripts/bootstrap.sh
 
-
 #Rerun the Update to resolve install issues
-#RUN apt-get update -f
+RUN apt-get update -f
 
 # Expose ports
 EXPOSE 80
-
-# Set the default command to execute when creating a new container
-#CMD ["/usr/sbin/sshd", "-D"] && python twoweeks.py
 CMD ["supervisord", "-n"]
-
-##CMD cd /2Weeks && git pull && newrelic-admin run-program python runserver.py
-##CMD cd /2Weeks && git pull && python wsgi.py
