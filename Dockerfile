@@ -18,7 +18,6 @@ RUN apt-get update && apt-get install -y \
     python \
     python-dev \
     python-setuptools \
-    build-essential \
     nginx \
     supervisor \
     mysql-client \
