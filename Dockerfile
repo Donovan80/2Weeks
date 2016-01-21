@@ -13,18 +13,30 @@ MAINTAINER Robert Donovan <robert.b.donovan@gmail.com>
 
 # Update the sources list and Install basic applications
 run perl -p -i.orig -e 's/archive.ubuntu.com/mirrors.aliyun.com\/ubuntu/' /etc/apt/sources.list
-RUN apt-get install -y build-essential git
-RUN apt-get install -y python python-dev python-setuptools
-RUN apt-get install -y nginx supervisor
-RUN easy_install pip
+
+
+
+# Install / Update
+RUN apt-get update && apt-get install -y \
+    git \
+    python \
+    python-dev \
+    python-setuptools \
+    build-essential \
+    nginx \
+    supervisor \
+    mysql-client \
+    install \
+    software-properties-common \
+    python-software-properties \
+    python-pip
+
 
 # Install uwsgi now because it takes a little while
 RUN pip install uwsgi
 
-# Install nginx
-RUN apt-get install -y software-properties-common python-software-properties
+# Nginx Repo
 RUN add-apt-repository ppa:nginx/stable
-RUN apt-get install mysql-client
 
 #Install App code
 add . /home/docker/code/
@@ -44,8 +56,6 @@ RUN pip install -r /2Weeks/requirements.txt
 #Run the setup script from Dave
 #RUN chmod +x /2Weeks/scripts/bootstrap.sh
 
-#Rerun the Update to resolve install issues
-RUN apt-get update -f
 
 # Expose ports
 EXPOSE 80
