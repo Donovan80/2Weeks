@@ -16,6 +16,19 @@ __author__ = 'Robert Donovan'
 # if __name__ == "__main__":
 #    application.run(debug=config.DEBUG)
 
-def application(env, start_response):
-    start_response('200 OK', [('Content-Type', 'text/html')])
-    return ["Hello!"]
+from flask import Flask
+
+application = Flask(__name__)
+
+
+@application.route('/', methods=['GET'])
+def index():
+    return 'Hello world!'
+
+
+def test():
+    application.run(debug=True)
+
+
+if __name__ == '__main__':
+    test()

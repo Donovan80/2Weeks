@@ -4,17 +4,13 @@
 # This is the Devlopement Build
 ############################################################
 # Set the base image to Ubuntu
-FROM ubuntu:wily
-# Add the application resources URL
-#RUN echo "deb http://apt.dockerproject.org/repo/dists/ubuntu-wily/main" > /etc/apt/sources.list
+FROM ubuntu:14.04
 
 # File Author / Maintainer
 MAINTAINER Robert Donovan <robert.b.donovan@gmail.com>
 
 # Update the sources list and Install basic applications
 run perl -p -i.orig -e 's/archive.ubuntu.com/mirrors.aliyun.com\/ubuntu/' /etc/apt/sources.list
-
-
 
 # Install / Update
 RUN apt-get update && apt-get install -y \
@@ -30,7 +26,6 @@ RUN apt-get update && apt-get install -y \
     software-properties-common \
     python-software-properties \
     python-pip
-
 
 # Install uwsgi now because it takes a little while
 RUN pip install uwsgi
