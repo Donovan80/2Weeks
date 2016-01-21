@@ -3,8 +3,8 @@ web:
   build: ./web
   expose:
     - "8000"
-  links:
-    - postgres:postgres
+  #links:
+  #  - postgres:postgres
   volumes:
     - /usr/src/app/static
   env_file: .env
