@@ -41,14 +41,14 @@ RUN add-apt-repository ppa:nginx/stable
 #Install App code
 add . /home/docker/code/
 
+# Copy the application folder inside the container
+RUN git clone https://github.com/mixfinancial/2Weeks.git
+
 #Config files
 RUN echo "deamon off;" >> /etc/nginx/nginx.conf
 RUN rm /etc/nginx/sites-enabled/default
 RUN ln -s /home/docker/code/nginx-app.conf /etc/nginx/site-enabled/
 RUN ln -s /home/docker/code/supervisor-app.conf /etc/supervisor/conf.d/
-
-# Copy the application folder inside the container
-RUN git clone https://github.com/mixfinancial/2Weeks.git
 
 # Get pip to download and install requirements:
 RUN pip install -r /2Weeks/requirements.txt
