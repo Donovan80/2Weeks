@@ -16,14 +16,14 @@ run perl -p -i.orig -e 's/archive.ubuntu.com/mirrors.aliyun.com\/ubuntu/' /etc/a
 RUN apt-get update && apt-get install -y \
     git \
     python \
-    python-dev \
-    python-setuptools \
-    nginx \
-    supervisor \
-    mysql-client \
-    install \
-    software-properties-common \
-    python-software-properties \
+   # python-dev \
+#    python-setuptools \
+#    nginx \
+#    supervisor \
+#    mysql-client \
+#    install \
+#    software-properties-common \
+#    python-software-properties \
     python-pip
 
 # Install uwsgi now because it takes a little while
