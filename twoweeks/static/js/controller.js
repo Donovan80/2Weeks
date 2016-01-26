@@ -10,7 +10,7 @@ var menuBarAppControllers = angular.module("menuBarAppControllers", []);
 ************************/
 billsAppControllers.controller("billFormController",['$scope', '$http', '$routeParams', '$location', 'Bill', '$modal', 'Me', 'PaymentPlan', 'PaymentPlanItem', 'ngToast', function($scope, $http, transformRequestAsFormPost, $location, Bill, $modal, Me, PaymentPlan, PaymentPlanItem, ngToast) {
     $scope.date = new Date();
-    $scope.animationsEnabled = true
+    $scope.animationsEnabled = true;
     $scope.paymentPlanBills = [];
     $scope.fundedBillsTotal = 0;
 
@@ -116,7 +116,7 @@ billsAppControllers.controller("billFormController",['$scope', '$http', '$routeP
                 $scope.fld_account_balance_amount = $scope.me.account_balance_amount;
                 ngToast.danger("Error Setting Account Balance '" + error.status + "': " + error.statusText);
             });
-        }
+        };
 
         Bill.query({'paid_flag': false, 'funded_flag': false}, function(data) {
             $scope.bills = convertBillsToJSObjects(data.data);
@@ -127,7 +127,7 @@ billsAppControllers.controller("billFormController",['$scope', '$http', '$routeP
             //GET HOW MANY AND MUCH BILLS THAT ARE FUNDED
             Bill.query({'paid_flag': false, 'funded_flag': true}, function(data) {
                 var prepFundedBillsTotal = 0;
-                console.log('~~~Checking for funded bills~~~')
+                console.log('~~~Checking for funded bills~~~');
                 if(data.error == null){
                     console.log(data.data);
 
@@ -228,7 +228,7 @@ billsAppControllers.controller("billFormController",['$scope', '$http', '$routeP
                 $scope.disableSave = false;
                 $scope.disableExecute = true;
                 $scope.disableReset = false;
-            }
+            };
 
 
             $scope.removeFromPaymentPlan = function(paymentPlanBill){
@@ -239,7 +239,7 @@ billsAppControllers.controller("billFormController",['$scope', '$http', '$routeP
                 $scope.disableSave = false;
                 $scope.disableExecute = true;
                 $scope.disableReset = false;
-            }
+            };
 
 
             $scope.resetBillPrep = function(){
@@ -294,7 +294,7 @@ billsAppControllers.controller("billFormController",['$scope', '$http', '$routeP
 
     $scope.savePaymentPlan = function(){
         savePaymentPlan();
-    }
+    };
 
 
     function savePaymentPlan(){
@@ -336,7 +336,7 @@ billsAppControllers.controller("billFormController",['$scope', '$http', '$routeP
 
     $scope.getBillRemainingDue = function(bill){
        return getBillRemainingDue(bill);
-    }
+    };
 
     function paymentPlanTotal(){
         var total = 0;
@@ -393,7 +393,7 @@ billsAppControllers.controller("billFormController",['$scope', '$http', '$routeP
                                  if(data.data == null){
                                     ngToast.danger('No Data');
                                  }else{
-                                    console.log("Executed Plan")
+                                    console.log("Executed Plan");
                                     window.location.href = '/home/#/billExecute';
                                  }
                             }else{
@@ -413,7 +413,7 @@ billsAppControllers.controller("billFormController",['$scope', '$http', '$routeP
         }else{
             ngToast.warning('You must select a bill to pay to execute a funding plan')
         }
-    }
+    };
 
     $scope.submit = function() {
        var data = $scope.bill;
@@ -450,7 +450,7 @@ billsAppControllers.controller("billFormController",['$scope', '$http', '$routeP
 billsAppControllers.controller("billExecuteController",['$scope', '$http', '$routeParams', '$location', 'Bill', '$modal', 'Me', 'PaymentPlan', 'PaymentPlanItem', 'ngToast', function($scope, $http, transformRequestAsFormPost, $location, Bill, $modal, Me, PaymentPlan, PaymentPlanItem, ngToast) {
 
     $scope.date = new Date();
-    $scope.animationsEnabled = true
+    $scope.animationsEnabled = true;
     $scope.paymentPlanBills = [];
 
     $scope.editBill = function (index) {
@@ -558,7 +558,7 @@ billsAppControllers.controller("billExecuteController",['$scope', '$http', '$rou
             $scope.addToProcessed = function(bill){
                 Bill.update({billId: bill.id}, {id:bill.id, payment_processing_flag:true}, function(data) {
                     if(data.error == null){
-                        bill.payment_processing_flag = true
+                        bill.payment_processing_flag = true;
                         ngToast.success("Bill '"+bill.name+"' set as processing");
                     }else{
                         ngToast.danger("Error: "+data.error);
@@ -567,13 +567,13 @@ billsAppControllers.controller("billExecuteController",['$scope', '$http', '$rou
                     console.log(error);
                     ngToast.danger("Received error status '"+error.status+"': "+error.statusText);
                    });
-            }
+            };
 
 
             $scope.removeFromProcessed = function(bill){
                 Bill.update({billId: bill.id}, {id:bill.id, payment_processing_flag:false}, function(data) {
                     if(data.error == null){
-                        bill.payment_processing_flag = false
+                        bill.payment_processing_flag = false;
                         ngToast.success("Bill '"+bill.name+"' removed from processed");
                     }else{
                         ngToast.danger("Error: "+data.error);
@@ -582,7 +582,7 @@ billsAppControllers.controller("billExecuteController",['$scope', '$http', '$rou
                     console.log(error);
                     ngToast.danger("Received error status '"+error.status+"': "+error.statusText);
                 });
-            }
+            };
 
             $scope.fundedBillsTotal = function(){
                 var tmpAmount = 0;
@@ -593,7 +593,7 @@ billsAppControllers.controller("billExecuteController",['$scope', '$http', '$rou
                     }
                 });
                 return tmpAmount;
-            }
+            };
 
             $scope.processedBillsTotal = function(){
                 var tmpAmount = 0;
@@ -603,7 +603,7 @@ billsAppControllers.controller("billExecuteController",['$scope', '$http', '$rou
                     }
                 });
                 return tmpAmount;
-            }
+            };
 
             $scope.payBill = function(bill){
                 Bill.update({billId: bill.id}, {id:bill.id, paid_flag:true}, function(data) {
@@ -657,7 +657,7 @@ billsAppControllers.controller("billExecuteController",['$scope', '$http', '$rou
 billsAppControllers.controller("billTrackController",['$scope', '$http', '$routeParams', '$location', 'Bill', '$modal', 'Me', 'PaymentPlan', 'PaymentPlanItem', 'ngToast', function($scope, $http, transformRequestAsFormPost, $location, Bill, $modal, Me, PaymentPlan, PaymentPlanItem, ngToast) {
 
     $scope.date = new Date();
-    $scope.animationsEnabled = true
+    $scope.animationsEnabled = true;
 
     $scope.editBill = function (index) {
         //console.log(index);
@@ -760,7 +760,7 @@ billsAppControllers.controller("billTrackController",['$scope', '$http', '$route
                     }
                 });
                 return tmpAmount;
-            }
+            };
 
             $scope.processedBillsTotal = function(){
                 var tmpAmount = 0;
@@ -770,7 +770,7 @@ billsAppControllers.controller("billTrackController",['$scope', '$http', '$route
                     }
                 });
                 return tmpAmount;
-            }
+            };
 
             $scope.payBill = function(bill){
                 Bill.update({billId: bill.id}, {id:bill.id, paid_flag:true}, function(data) {
@@ -830,7 +830,7 @@ billsAppControllers.controller('BillFormModalController', ['$scope', '$modalInst
 
     if(data != null){
         var action = 'edit';
-        $scope.title = "Edit Bill"
+        $scope.title = "Edit Bill";
         $scope.model = data;
         $scope.model.due_date = new Date(data.due_date);
         $scope.model.remaining_due = getBillRemainingDue(data);
@@ -872,7 +872,7 @@ billsAppControllers.controller('BillFormModalController', ['$scope', '$modalInst
 
 
     }else{
-        $scope.title = "Create New Bill"
+        $scope.title = "Create New Bill";
         $scope.model = {};
         $scope.model.payment_type_ind = "M";
     }
@@ -942,7 +942,7 @@ billsAppControllers.controller('BillFormModalController', ['$scope', '$modalInst
 billsAppControllers.controller('EditPaymentPlanItemModalController', ['$scope', '$modalInstance', 'PaymentPlanItem', 'data', 'ngToast', function ($scope, $modalInstance, PaymentPlanItem, data, ngToast) {
     var action = 'new';
 
-    $scope.title = "Edit Payment Plan Item"
+    $scope.title = "Edit Payment Plan Item";
 
     $scope.model = data;
     $scope.model.total_due = parseFloat($scope.model.total_due);
@@ -956,11 +956,11 @@ billsAppControllers.controller('EditPaymentPlanItemModalController', ['$scope', 
         }else{
             $scope.model.amount = Math.round(($scope.model.amount + tenPercent)*100)/100;
         }
-    }
+    };
 
     $scope.makeAmountTotal = function(){
         $scope.model.amount = $scope.model.remaining_due;
-    }
+    };
 
     $scope.model.remaining_due = getBillRemainingDue(data);
 
@@ -972,12 +972,12 @@ billsAppControllers.controller('EditPaymentPlanItemModalController', ['$scope', 
         }else{
             $scope.model.amount = Math.round(($scope.model.amount - tenPercent)*100)/100;
         }
-    }
+    };
 
     $scope.differencePercent = function() {
        return Math.floor(($scope.model.amount/$scope.model.remaining_due)*100);
 
-    }
+    };
 
      $scope.differenceInAmount = function() {
        return $scope.model.remaining_due - $scope.model.amount;
@@ -1024,7 +1024,7 @@ billsAppControllers.controller("confirmEmailController",['$scope', '$location', 
     $scope.confirmAccount  = function(){
         ConfirmEmail.update({userId:$scope.me.id, email_token:$scope.email_token}, function(data) {
             if(data.error == null){
-                    $scope.confirmed = true
+                    $scope.confirmed = true;
                     $scope.needToConfirm = false;
                 }else{
                     ngToast.danger("Error: " + data.error);
@@ -1033,7 +1033,7 @@ billsAppControllers.controller("confirmEmailController",['$scope', '$location', 
             console.log(error);
             ngToast.danger("Error Saving User Updates '" + error.status + "': " + error.statusText);
         });
-    }
+    };
 
     Me.query(function(data) {
         console.log(data.data[0]);
@@ -1208,7 +1208,7 @@ menuBarAppControllers.controller('userAccountController',['$scope', '$http', '$l
                 $scope.uAveragePaycheckAmount = true
             }else if(toggleName == 'uAveragePaycheckAmount'){
                 $scope.uPayRecurrence = true;
-                $scope.uNextPayDate = true
+                $scope.uNextPayDate = true;
                 $scope.uAveragePaycheckAmount = !$scope.uAveragePaycheckAmount;
             }else if(!toggleName){
                 $scope.uPayRecurrence = true;
@@ -1216,7 +1216,7 @@ menuBarAppControllers.controller('userAccountController',['$scope', '$http', '$l
                 $scope.uAveragePaycheckAmount = true;
             }
         }
-    }
+    };
 
 
 
@@ -1232,7 +1232,7 @@ menuBarAppControllers.controller('userAccountController',['$scope', '$http', '$l
             console.log(error);
             ngToast.danger("Error: '" + error.status + "': " + error.statusText);
         });
-    }
+    };
 
 
     $scope.submitForm = function(toggleName){
@@ -1250,8 +1250,8 @@ menuBarAppControllers.controller('userAccountController',['$scope', '$http', '$l
             }
             Me.update({userId: $scope.me.id}, JSON.stringify(data), function(data) {
                 if(data.error == null){
-                    $scope.me.first_name = $scope.model.first_name
-                    $scope.me.last_name = $scope.model.last_name
+                    $scope.me.first_name = $scope.model.first_name;
+                    $scope.me.last_name = $scope.model.last_name;
                     ngToast.success("User Updated Successfully");
                     $scope.toggleCollapse(null);
                 }else{
@@ -1332,7 +1332,7 @@ menuBarAppControllers.controller('userAccountController',['$scope', '$http', '$l
             }
             Me.update({userId: $scope.me.id}, JSON.stringify(data), function(data) {
                 if(data.error == null){
-                    $scope.me.next_pay_date = $scope.model.next_pay_date
+                    $scope.me.next_pay_date = $scope.model.next_pay_date;
                     ngToast.success("User Updated Successfully");
                     $scope.toggleCollapse(null);
                 }else{
@@ -1351,7 +1351,7 @@ menuBarAppControllers.controller('userAccountController',['$scope', '$http', '$l
             }
             Me.update({userId: $scope.me.id}, JSON.stringify(data), function(data) {
                 if(data.error == null){
-                    $scope.me.average_paycheck_amount = $scope.model.average_paycheck_amount
+                    $scope.me.average_paycheck_amount = $scope.model.average_paycheck_amount;
                     ngToast.success("User Updated Successfully");
                     $scope.toggleCollapse(null);
                 }else{
@@ -1377,7 +1377,7 @@ menuBarAppControllers.controller('userAccountController',['$scope', '$http', '$l
 menuBarAppControllers.controller('FeedbackFormModalController', ['$scope', '$modalInstance', 'ngToast', 'Feedback', function ($scope, $modalInstance, ngToast, Feedback) {
 
     $scope.model = {};
-    $scope.title = "Submit Feedback"
+    $scope.title = "Submit Feedback";
 
     $scope.formFields = [
                             {
@@ -1476,9 +1476,7 @@ function differenceInDays(first_date) {
     var millisBetween = first_date.getTime() - today.getTime();
     var days = millisBetween / millisecondsPerDay;
     return Math.floor(days);
-};
-
-
+}
 //Global function to process bills and convert object types
 function convertBillsToJSObjects(bills){
     var newBillsList = [];

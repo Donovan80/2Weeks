@@ -1,5 +1,6 @@
 pymysql
 Flask
+gunicorn
 Flask-SQLAlchemy
 Flask-login
 Flask-Mail
@@ -11,4 +12,4 @@ werkzeug
 newrelic
 MySQL
 SQLAlchemy
-MySQL-python
+#MySQL-python

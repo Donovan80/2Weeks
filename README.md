@@ -25,6 +25,9 @@ Run newrelic-admin run-program python runserver.py
     python functional_test.py
 
 
+#Ref for Docker and Compose
+https://realpython.com/blog/python/dockerizing-flask-with-compose-and-machine-from-localhost-to-the-cloud/
+
 
 
 ## Notes for Robert since he can't remember

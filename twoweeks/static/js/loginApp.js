@@ -173,7 +173,7 @@ loginAppControllers.controller("loginAppLoginController",['$scope', '$location',
             $scope.title = "Register new account";
             $scope.sectionFlag = 'register';
         }
-    }
+    };
 
 
     //This simple function auto-logs in users
@@ -201,7 +201,7 @@ loginAppControllers.controller("loginAppLoginController",['$scope', '$location',
                 ngToast.warning("Please Enter username and password")
             }else{
                 Login.save(JSON.stringify({username: $scope.model.username, password: $scope.model.password}), function(data){
-                    console.log(data)
+                    console.log(data);
                     if(data.error == null){
                         if(searchObject.action == null){
                             window.location.href = location+'/home/';
@@ -219,11 +219,11 @@ loginAppControllers.controller("loginAppLoginController",['$scope', '$location',
 
         //Need to update pay_recurrance_flag...comes in as a json object
 
-        $scope.model.pay_recurrance_flag = $scope.model.pay_recurrance.value
+        $scope.model.pay_recurrance_flag = $scope.model.pay_recurrance.value;
 
             console.log("REGISTERING NEW USER");
             Me.register(JSON.stringify($scope.model), function(data){
-                console.log(data)
+                console.log(data);
                 if(data.error == null){
                     window.location.href = location+'/home/';
                 }else{
@@ -286,7 +286,7 @@ loginAppControllers.controller("recoverPasswordController",['$scope', '$location
 
             RecoverPassword.update({email_address:$scope.model.email_address}, JSON.stringify(JSONdata), function(data) {
                 if(data.error == null){
-                        $scope.confirmed = true
+                        $scope.confirmed = true;
                         $scope.needToConfirm = false;
                         ngToast.success("Password has been changed");
                     }else{

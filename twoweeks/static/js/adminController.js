@@ -24,7 +24,7 @@
 
         $scope.delete = function(text, $window, $location) {
             User.delete({userId: text});
-            ngToast.success('User #'+text+' has been successfully deleted')
+            ngToast.success('User #'+text+' has been successfully deleted');
             $scope.users.splice($scope.users.indexOf(text), 1);
         }
 
@@ -32,7 +32,7 @@
 
     userControllers.controller("UserViewController", ['$scope', '$http', '$routeParams', 'User', function($scope, $http, $routeParams, User) {
         $scope.users = User.get({userId: $routeParams.userId}, function(user) {
-            console.log(user.data[0])
+            console.log(user.data[0]);
             $scope.user = user.data[0];
         });
 
@@ -52,7 +52,7 @@
 
     userControllers.controller("UserEditFormController",['$scope', '$http', '$routeParams', '$location', 'User', function($scope, $http, $routeParams, $location, User) {
         $scope.users = User.get({userId: $routeParams.userId}, function(user) {
-            console.log(user.data[0])
+            console.log(user.data[0]);
             $scope.user = user.data[0];
         });
 

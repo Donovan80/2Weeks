@@ -1,14 +1,16 @@
 web:
   restart: always
-  build: ./web
+  build: ./twoweeks
   expose:
     - "8000"
   #links:
   #  - postgres:postgres
   volumes:
-    - /usr/src/app/static
+    #- /usr/src/twoweeks/static
+    - /twoweeks/static
   env_file: .env
   command: /usr/local/bin/gunicorn -w 2 -b :8000 app:app
+
 
 nginx:
   restart: always
@@ -20,4 +22,4 @@ nginx:
   volumes_from:
     - web
   links:
-    - web:web
+    - web:twoweeks
