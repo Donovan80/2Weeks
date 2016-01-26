@@ -6,8 +6,8 @@ FROM python:2-onbuild
 
 COPY /. /usr/src/app
 
-#WORKDIR app/
+WORKDIR /usr/src/app
 
-CMD [ "python", "./app.py" ]
+CMD [ "python", "/usr/src/app/app.py" ]
 
 #git clone https://github.com/Donovan80/App.git
