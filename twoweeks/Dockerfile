@@ -4,7 +4,7 @@ FROM python:2-onbuild
 
 #Move files
 
-COPY ./ /usr/src/app
+COPY /. /usr/src/app
 
 #WORKDIR app/
 
